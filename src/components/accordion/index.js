@@ -23,10 +23,12 @@ Accordion.Frame = function AccordionFrame({ children, ...restProps }) {
 
 Accordion.Item = function AccordionItem({ children, ...restProps }) {
     const [toggleShow, setToggleShow] = useState(false);
-
-    return <ToggleContext.Provider value={{ toggleShow, setToggleShow }}>
-        <Item {...restProps}>{children}</Item>;
+    
+    return (
+    <ToggleContext.Provider value={{ toggleShow, setToggleShow }}>
+        <Item {...restProps}>{children}</Item>
     </ToggleContext.Provider>
+    );
 };
 
 Accordion.Header = function AccordionHeader({ children, ...restProps }) {
@@ -34,6 +36,7 @@ Accordion.Header = function AccordionHeader({ children, ...restProps }) {
 
     return (<Header onClick={() => setToggleShow((toggleShow) => !toggleShow)}
         {...restProps}>
+            
         {children}
         { toggleShow ? (
             <img src="/images/icons/close-slim.png" alt="Close" />
