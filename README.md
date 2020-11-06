@@ -7,6 +7,7 @@ Disneyflix é um clone do Netflix desenvolvido com react e mongoDB. Trabalho pro
 # Features!
 
   - LandiongPage
+  - SignPage
   
 
 
@@ -46,7 +47,6 @@ $ npm start
 ### Todos
 
  - Conect with mongoDB
- - Sign in page
 
 License
 ----
