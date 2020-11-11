@@ -1,0 +1,27 @@
+[
+    {
+      "id": 1,
+      "header": "O que é o DisneyFlix?",
+      "body": "É o Netflix só que na Disney!"
+    },
+    {
+      "id": 2,
+      "header": "Quanto custa?",
+      "body": "Quanto custa uma viagem pra Disney?"
+    },
+    {
+      "id": 3,
+      "header": "Onde gostaria de assistir?",
+      "body": "Assista em qualquer, ms que esteja na Disney"
+    },
+    {
+      "id": 4,
+      "header": "Como cancelar?",
+      "body": "Não é possível cancelar, mas você pode cancelar o cartão. :)"
+    },
+    {
+      "id": 5,
+      "header": "O que posso assistir?",
+      "body": "Temos apenas o Mickey Mouse passeando na DisneyLand."
+    }
+  ]

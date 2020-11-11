@@ -1,0 +1,26 @@
+[
+    {
+      "id": 1,
+      "title": "Aprecie sua própria TV",
+      "subTitle": "Assista várias coisas super hiper legais pra chuchu!",
+      "image": "/images/misc/home-tv.jpg",
+      "alt": "Tiger King on Netflix",
+      "direction": "row"
+    },
+    {
+      "id": 2,
+      "title": "Baixe e assista o Mickey na DisneyLand onde quiser :)",
+      "subTitle": "Ebah!",
+      "image": "/images/misc/home-mobile.jpg",
+      "alt": "Watch on mobile",
+      "direction": "row-reverse"
+    },
+    {
+      "id": 3,
+      "title": "Assista em todas as plataformas.",
+      "subTitle": "É possível assistir mesmo que esteja na Disney.",
+      "image": "/images/misc/home-imac.jpg",
+      "alt": "Money Heist on Netflix",
+      "direction": "row"
+    }
+  ]
