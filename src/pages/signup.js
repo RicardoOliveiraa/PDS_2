@@ -5,7 +5,7 @@ import { HeaderContainer } from '../containers/header';
 import { FooterContainer } from '../containers/footer';
 import axios from "axios";
 
-// import api from "../services/api";
+import api from "../services/api";
 import * as ROUTES from '../constants/routes';
 
 export default function SignUp() {
@@ -24,6 +24,8 @@ export default function SignUp() {
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
   const [confirmation, setConfirmation] = useState('');
+  const [plan, setplan] = useState('');
+  const [payment_method, setpayment_method] = useState('');
   const [error, setError] = useState('');
 
   const isInvalid = firstName === '' || emailAddress === '' || password === '' || confirmation === '';
@@ -33,12 +35,14 @@ export default function SignUp() {
     const user = {
       name: firstName,
       password: password,
-      password: confirmation,
-      email: emailAddress
+      passwordCheck: confirmation,
+      email: emailAddress,
+      payment_method: payment_method,
+      plan: plan,
     };
     
     axios
-      .post(`https://disney-flix.herokuapp.com/user`, {name:firstName,password:password,email:emailAddress})
+      .post(`https://disney-flix.herokuapp.com/user`, user)
       .then(res => {
         console.log(res)
       })
@@ -61,10 +65,7 @@ export default function SignUp() {
               placeholder="Email"
               value={emailAddress}
               onChange={({ target }) => setEmailAddress(target.value)}
-            />
-            <div>
-              {firstName}
-            </div>
+            />            
             <Form.Input
               type="password"
               value={password}
@@ -78,6 +79,20 @@ export default function SignUp() {
               autoComplete="off"
               placeholder="Confirme a senha"
               onChange={({ target }) => setConfirmation(target.value)}
+            />
+             <Form.Input
+              type="Nome"
+              value={plan}
+              autoComplete="off"
+              placeholder="Plano"
+              onChange={({ target }) => setplan(target.value)}
+            />
+            <Form.Input
+              type="Nome"
+              value={payment_method}
+              autoComplete="off"
+              placeholder="Pagamento"
+              onChange={({ target }) => setpayment_method(target.value)}
             />
             <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-up">
               Inscrição
