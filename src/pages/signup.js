@@ -3,9 +3,21 @@ import { useHistory } from 'react-router-dom';
 import { Form } from '../components';
 import { HeaderContainer } from '../containers/header';
 import { FooterContainer } from '../containers/footer';
+import axios from "axios";
+
+// import api from "../services/api";
 import * as ROUTES from '../constants/routes';
 
 export default function SignUp() {
+  // const user = {
+  //   name: "$2b$08$1j0XveZ1",
+  //   password: "$2b$08$1j0XveZ1",
+  //   email: "$2b$08$1j0XveZ1",
+  //   payment_method: "$2b$08$1j0XveZ1",
+  //   plan: "$2b$08$1j0XveZ1",
+  // } 
+
+
   const history = useHistory();
 
   const [firstName, setFirstName] = useState('');
@@ -18,6 +30,18 @@ export default function SignUp() {
 
   const handleSignup = (event) => {
     event.preventDefault();
+    const user = {
+      name: firstName,
+      password: password,
+      password: confirmation,
+      email: emailAddress
+    };
+    
+    axios
+      .post(`https://disney-flix.herokuapp.com/user`, {name:firstName,password:password,email:emailAddress})
+      .then(res => {
+        console.log(res)
+      })
   }
 
   return (
@@ -38,6 +62,9 @@ export default function SignUp() {
               value={emailAddress}
               onChange={({ target }) => setEmailAddress(target.value)}
             />
+            <div>
+              {firstName}
+            </div>
             <Form.Input
               type="password"
               value={password}
@@ -46,7 +73,7 @@ export default function SignUp() {
               onChange={({ target }) => setPassword(target.value)}
             />
             <Form.Input
-              type="confirmation"
+              type="password"
               value={confirmation}
               autoComplete="off"
               placeholder="Confirme a senha"
