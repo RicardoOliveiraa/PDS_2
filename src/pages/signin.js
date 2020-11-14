@@ -3,23 +3,37 @@ import { useHistory } from 'react-router-dom';
 import { Form } from '../components';
 import { HeaderContainer } from '../containers/header';
 import { FooterContainer } from '../containers/footer';
+import api from "../services/api";
 import * as ROUTES from '../constants/routes';
 
 export default function SignIn() {
+
+  const user = {
+    name: "$2b$08$1j0XveZ1",
+    password: "$2b$08$1j0XveZ1",
+    email: "$2b$08$1j0XveZ1",
+    payment_method: "$2b$08$1j0XveZ1",
+    plan: "$2b$08$1j0XveZ1",
+  } 
+
+
+
   const history = useHistory();
-
-
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const isInvalid = password === '' || emailAddress === '';
 
-  const handleSignin = (event) => {
+  const handleSignup = (event) => {
     event.preventDefault();
-
-    
   };
+
+  const response =  api.post("user/", user)
+
+  console.log('response: ', response)
+  console.log('senha: ', user.password)
+  console.log(db.listDatabases)
 
   return (
     <>
@@ -28,7 +42,7 @@ export default function SignIn() {
           <Form.Title>Entrar</Form.Title>
           {error && <Form.Error data-testid="error">{error}</Form.Error>}
 
-          <Form.Base onSubmit={handleSignin} method="POST">
+          <Form.Base onSubmit={handleSignup} method="POST">
             <Form.Input
               placeholder="Email"
               value={emailAddress}
