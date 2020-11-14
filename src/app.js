@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Home, Browse, Signin, Signup } from './pages';
 import * as ROUTES from './constants/routes';
 import { IsUserRedirect, ProtectedRoute } from './helpers/routes';
@@ -13,6 +13,7 @@ export default function App() {
   */
   return (
   <Router>
+    <Switch>
       <IsUserRedirect 
       user={user}
       loggedInPath={ROUTES.BROWSE} 
@@ -35,6 +36,7 @@ export default function App() {
       path={ROUTES.HOME}>
         <Home />
       </IsUserRedirect>
+      </Switch>
   </Router>
   );
 }
