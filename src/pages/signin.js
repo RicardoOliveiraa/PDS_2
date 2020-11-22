@@ -24,7 +24,7 @@ export default function SignIn() {
     axios
       .post(`https://disney-flix.herokuapp.com/login`,  user)
         .then(res =>{
-          if (res.data.success == true) {
+          if (res.data.success) {
             console.log(res)
             console.log(res.data)
             history.push("/browse")

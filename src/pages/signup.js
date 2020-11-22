@@ -44,6 +44,12 @@ export default function SignUp() {
     axios
       .post(`https://disney-flix.herokuapp.com/user`, user)
       .then(res => {
+        if(res.data.success) {
+          alert("Conta criada com sucesso")
+          history.push("/signin")
+        } else {
+          alert("Aconteceu algum erro na criação da sua conta")
+        }
         console.log(res)
       })
   }
