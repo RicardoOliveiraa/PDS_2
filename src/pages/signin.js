@@ -1,26 +1,40 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect , useLocation} from 'react-router-dom';
 import { Form } from '../components';
 import { HeaderContainer } from '../containers/header';
 import { FooterContainer } from '../containers/footer';
-import * as ROUTES from '../constants/routes';
+
+// import * as ROUTES from '../constants/routes';
+import axios from 'axios';
 
 export default function SignIn() {
+
   const history = useHistory();
-
-
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
   const isInvalid = password === '' || emailAddress === '';
-
   const handleSignin = (event) => {
+    //https://disney-flix.herokuapp.com/login 
+    const user = {
+      email:emailAddress,
+      password:password
+    }
+  
+    axios
+      .post(`https://disney-flix.herokuapp.com/login`,  user)
+        .then(res =>{
+          if (res.data.success) {
+            console.log(res)
+            console.log(res.data)
+            history.push("/browse")
+          } else {
+            alert("Senha ou email incorreto")
+          }
+          
+        }) 
     event.preventDefault();
-
-    
   };
-
   return (
     <>
       <HeaderContainer>
@@ -41,6 +55,7 @@ export default function SignIn() {
               placeholder="Senha"
               onChange={({ target }) => setPassword(target.value)}
             />
+            
             <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-in">
               Entrar
             </Form.Submit>
