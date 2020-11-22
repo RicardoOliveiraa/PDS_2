@@ -27,6 +27,9 @@ export default function SignIn() {
           if (res.data.success == true) {
             console.log(res)
             console.log(res.data)
+            history.push("/browse")
+          } else {
+            alert("Senha ou email incorreto")
           }
           
         }) 

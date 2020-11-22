@@ -6,8 +6,9 @@ import { IsUserRedirect, ProtectedRoute } from './helpers/routes';
 
 export default function App() {
   const user = null;
+  // const user = {name: 'luiz'}; 
   /*
-  const user = {name: 'luiz'}; = usuario logado => browse
+  const user = {name: 'luiz'};  = usuario logado => browse
   const user = null; = não há um usuario logado => se mantem na page por nao estar logado
  
   */
@@ -15,25 +16,38 @@ export default function App() {
   <Router>
     <Switch>
       <IsUserRedirect 
-      user={user}
-      loggedInPath={ROUTES.BROWSE} 
-      path={ROUTES.SIGN_IN}>
+        user={user}
+        loggedInPath={ROUTES.BROWSE} 
+        path={ROUTES.SIGN_IN}>
         <Signin />
       </IsUserRedirect>
+
       <IsUserRedirect 
-      user={user} 
-      loggedInPath={ROUTES.BROWSE} 
-      path={ROUTES.SIGN_UP}>
+        user={user} 
+        loggedInPath={ROUTES.BROWSE} 
+        path={ROUTES.SIGN_UP}>
         <Signup />
+      <Browse />
       </IsUserRedirect>
-      <ProtectedRoute 
-      user={user} 
-      path={ROUTES.BROWSE}>
+
+      <IsUserRedirect 
+        user={user} 
+        loggedInPath={ROUTES.BROWSE} 
+        path={ROUTES.BROWSE}
+      >
         <Browse />
-      </ProtectedRoute>
-      <IsUserRedirect user={user} 
-      loggedInPath={ROUTES.BROWSE} 
-      path={ROUTES.HOME}>
+      </IsUserRedirect>
+
+      {/* <ProtectedRoute 
+        user={user} 
+        path={ROUTES.BROWSE}>
+      </ProtectedRoute> */}
+
+      <IsUserRedirect 
+        user={user} 
+        loggedInPath={ROUTES.BROWSE} 
+        path={ROUTES.HOME}
+      >
         <Home />
       </IsUserRedirect>
       </Switch>
