@@ -58,7 +58,7 @@ export default function SignUp() {
     <>
       <HeaderContainer>
         <Form>
-          <Form.Title>Sign Up</Form.Title>
+          <Form.Title>Cadastre-se</Form.Title>
           {error && <Form.Error>{error}</Form.Error>}
 
           <Form.Base onSubmit={handleSignup} method="POST">
