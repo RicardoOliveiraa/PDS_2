@@ -64,9 +64,6 @@ export default function SignIn() {
           <Form.Text>
             Novo na DisneyLand? <Form.Link to="/signup">Registrar-se.</Form.Link>
           </Form.Text>
-          <Form.TextSmall>
-            Esta página é protegida por Google reCAPTCHA para garantir que você não o WALL-E. Aprenda mais.
-          </Form.TextSmall>
         </Form>
       </HeaderContainer>
       <FooterContainer />
