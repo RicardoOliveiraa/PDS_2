@@ -3,10 +3,19 @@ import { useHistory } from 'react-router-dom';
 import { Form } from '../components';
 import { HeaderContainer } from '../containers/header';
 import { FooterContainer } from '../containers/footer';
+import Select from 'react-select';
 import axios from "axios";
 
 import api from "../services/api";
 import * as ROUTES from '../constants/routes';
+
+const options = [
+  { value: 'Básico', label: 'Básico' },
+  { value: 'Padrão', label: 'Padrão' },
+  { value: 'Premium', label: 'Premium' }
+]
+
+
 
 const SignUp = (props) =>  {
   const prop_email = props.location.state
@@ -24,6 +33,7 @@ const SignUp = (props) =>  {
   const isInvalid = firstName === '' || emailAddress === '' || password === '' || confirmation === '';
 
   const handleSignup = (event) => {
+    console.log("plan aqui", plan);
     event.preventDefault();
     const user = {
       name: firstName,
@@ -87,13 +97,16 @@ const SignUp = (props) =>  {
               placeholder="Confirme a senha"
               onChange={({ target }) => setConfirmation(target.value)}
             />
-             <Form.Input
+             {/* <Form.Input
               type="text"
               value={plan}
               autoComplete="off"
               placeholder="Plano"
               onChange={({ target }) => setplan(target.value)}
-            />
+            /> */}
+
+            
+
             <Form.Input
               type="text"
               value={payment_method}
@@ -101,6 +114,14 @@ const SignUp = (props) =>  {
               placeholder="Pagamento"
               onChange={({ target }) => setpayment_method(target.value)}
             />
+
+            <Select
+            defaultValue={options[1]}
+            options = {options}
+            placeholder = "Plano"
+            onChange={({ value }) => setplan(value)}
+            />
+
             <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-up">
               Cadastrar-se
             </Form.Submit>
