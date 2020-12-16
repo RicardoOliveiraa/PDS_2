@@ -38,7 +38,7 @@ const SignUp = (props) =>  {
 
     if (isValidEmail) {
       axios
-        .post(`https://f01dc703ca63.ngrok.io/user`, user)
+        .post(`https://disney-flix.herokuapp.com/user`, user)
         .then(
           ({data}) => {
             if(data.success) {
