@@ -9,17 +9,18 @@ import api from "../services/api";
 import * as ROUTES from '../constants/routes';
 
 const SignUp = (props) =>  {
+  const prop_email = props.location.state
+    ? props.location.state.prop_email
+    : ''
   const history = useHistory();
   const [firstName, setFirstName] = useState('');
-  const [emailAddress, setEmailAddress] = useState('');
+  const [emailAddress, setEmailAddress] = useState(prop_email);
   const [password, setPassword] = useState('');
   const [confirmation, setConfirmation] = useState('');
   const [plan, setplan] = useState('');
   const [payment_method, setpayment_method] = useState('');
   const [error, setError] = useState('');
-  const prop_email = props.location.state
-    ? props.location.state.prop_email
-    : ''
+  
   const isInvalid = firstName === '' || emailAddress === '' || password === '' || confirmation === '';
 
   const handleSignup = (event) => {
@@ -37,14 +38,16 @@ const SignUp = (props) =>  {
 
     if (isValidEmail) {
       axios
-        .post(`https://disney-flix.herokuapp.com/user`, user)
-        .then(res => {
-          if(res.data.success) {
-            alert("Conta criada com sucesso")
-            history.push("/signin")
-          } else {
-            alert("Aconteceu algum erro na criação da sua conta")
-          }
+        .post(`https://f01dc703ca63.ngrok.io/user`, user)
+        .then(
+          ({data}) => {
+            if(data.success) {
+              alert("Conta criada com sucesso")
+              history.push("/signin")
+            } else {
+              const message = data.message
+              alert(message ? message : "Aconteceu algum erro na criação da sua conta")
+            }
         })
     } else {
       alert("Email com formato inválido")
@@ -67,7 +70,7 @@ const SignUp = (props) =>  {
             />
             <Form.Input
               placeholder="Email"
-              value={ prop_email || emailAddress }
+              value={ emailAddress }
               onChange={({ target }) => setEmailAddress(target.value)}
             />            
             <Form.Input

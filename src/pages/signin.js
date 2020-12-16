@@ -22,17 +22,19 @@ export default function SignIn() {
     }
   
     axios
-      .post(`https://disney-flix.herokuapp.com/login`,  user)
-        .then(res =>{
-          if (res.data.success) {
-            console.log(res)
-            console.log(res.data)
-            history.push("/browse")
-          } else {
-            alert("Senha ou email incorreto")
-          }
+      .post(`https://f01dc703ca63.ngrok.io/login`,  user)
+        .then(
+          ({ data }) => {
+            if (data.success) {
+              console.log(data.user)
+              localStorage.setItem('user', JSON.stringify(data.user))
+              history.push("/browse")
+            } else {
+              alert("Senha ou email incorreto")
+            }
           
-        }) 
+          }
+        ) 
     event.preventDefault();
   };
   return (

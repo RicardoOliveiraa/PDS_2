@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { Home, Browse, Signin, Signup } from './pages';
+import { Home, Browse, Signin, Signup, createProfile } from './pages';
 import * as ROUTES from './constants/routes';
 import { IsUserRedirect, ProtectedRoute } from './helpers/routes';
 import ScrollToTop from './utils/ScrollToTop'
@@ -39,9 +39,19 @@ export default function App() {
         user={user} 
         loggedInPath={ROUTES.BROWSE} 
         path={ROUTES.BROWSE}
+        component={Browse}
       >
         <Browse />
       </IsUserRedirect>
+
+      {/* <IsUserRedirect 
+        user={user}
+        loggedInPath={ROUTES.BROWSE} 
+        path={ROUTES.CREATEPROFILE}
+        component={createProfile}
+      >
+        
+      </IsUserRedirect>    */}
 
       {/* <ProtectedRoute 
         user={user} 
