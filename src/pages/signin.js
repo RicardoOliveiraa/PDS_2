@@ -23,16 +23,18 @@ export default function SignIn() {
   
     axios
       .post(`https://disney-flix.herokuapp.com/login`,  user)
-        .then(res =>{
-          if (res.data.success) {
-            console.log(res)
-            console.log(res.data)
-            history.push("/browse")
-          } else {
-            alert("Senha ou email incorreto")
-          }
+        .then(
+          ({ data }) => {
+            if (data.success) {
+              console.log(data.user)
+              localStorage.setItem('user', JSON.stringify(data.user))
+              history.push("/browse")
+            } else {
+              alert("Senha ou email incorreto")
+            }
           
-        }) 
+          }
+        ) 
     event.preventDefault();
   };
   return (
@@ -64,9 +66,6 @@ export default function SignIn() {
           <Form.Text>
             Novo na DisneyLand? <Form.Link to="/signup">Registrar-se.</Form.Link>
           </Form.Text>
-          <Form.TextSmall>
-            Esta página é protegida por Google reCAPTCHA para garantir que você não o WALL-E. Aprenda mais.
-          </Form.TextSmall>
         </Form>
       </HeaderContainer>
       <FooterContainer />

@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { Home, Browse, Signin, Signup } from './pages';
+import { Home, Browse, Signin, Signup, createProfile } from './pages';
 import * as ROUTES from './constants/routes';
 import { IsUserRedirect, ProtectedRoute } from './helpers/routes';
+import ScrollToTop from './utils/ScrollToTop'
 
 export default function App() {
   const user = null;
@@ -14,19 +15,23 @@ export default function App() {
   */
   return (
   <Router>
+    <ScrollToTop />
     <Switch>
       <IsUserRedirect 
         user={user}
         loggedInPath={ROUTES.BROWSE} 
-        path={ROUTES.SIGN_IN}>
-        <Signin />
+        path={ROUTES.SIGN_IN}
+        component={Signin}
+      >
+        
       </IsUserRedirect>
 
       <IsUserRedirect 
         user={user} 
         loggedInPath={ROUTES.BROWSE} 
-        path={ROUTES.SIGN_UP}>
-        <Signup />
+        path={ROUTES.SIGN_UP}
+        component={Signup}
+      >
       <Browse />
       </IsUserRedirect>
 
@@ -34,9 +39,19 @@ export default function App() {
         user={user} 
         loggedInPath={ROUTES.BROWSE} 
         path={ROUTES.BROWSE}
+        component={Browse}
       >
         <Browse />
       </IsUserRedirect>
+
+      {/* <IsUserRedirect 
+        user={user}
+        loggedInPath={ROUTES.BROWSE} 
+        path={ROUTES.CREATEPROFILE}
+        component={createProfile}
+      >
+        
+      </IsUserRedirect>    */}
 
       {/* <ProtectedRoute 
         user={user} 
@@ -50,7 +65,7 @@ export default function App() {
       >
         <Home />
       </IsUserRedirect>
-      </Switch>
+    </Switch>
   </Router>
   );
 }
