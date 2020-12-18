@@ -85,7 +85,8 @@ Card.Feature = function CardFeature({ children, category, ...restProps }) {
     'feel-good': "boas vibes",
     drama: "drama",
     suspense: "suspense",
-    romance: "romance"
+    romance: "romance",
+    thriller: "terror"
   }
 
   return showFeature ? (
