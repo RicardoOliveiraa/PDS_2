@@ -53,10 +53,10 @@ export function BrowseContainer ({slides}) {
                 <Header.Frame>
                     <Header.Group>
                         <Header.Logo to={ROUTES.HOME} src={logo} alt="Netflix" />
-                        <Header.TextLink active={category === 'series' ? 'true' : 'false'} onClick={() => setCategory('series')}>
+                        <Header.TextLink active={category === 'series' ? 'true' : 'false'} onClick={() => setCategory('series')} fontWeight="bold">
                             Series
                         </Header.TextLink>
-                        <Header.TextLink active={category === 'films' ? 'true' : 'false'} onClick={() => setCategory('films')}>
+                        <Header.TextLink active={category === 'films' ? 'true' : 'false'} onClick={() => setCategory('films')} fontWeight="bold">
                             Filmes
                         </Header.TextLink>
                     </Header.Group>
@@ -79,11 +79,9 @@ export function BrowseContainer ({slides}) {
                 </Header.Frame>
 
                 <Header.Feature>
-                    <Header.FeatureCallOut>Watch Joker Now</Header.FeatureCallOut>
+                    <Header.FeatureCallOut>Veja o Coringa Agora</Header.FeatureCallOut>
                     <Header.Text>
-                        Forever alone in a crowd, failed comedian Arthur Fleck seeks connection as he walks the streets of Gotham
-                        City. Arthur wears two masks -- the one he paints for his day job as a clown, and the guise he projects in a
-                        futile attempt to feel like he's part of the world around him.
+                        Para sempre sozinho em uma multidão, o comediante fracassado Arthur Fleck busca conexão enquanto caminha pelas ruas de Gotham City. Arthur usa duas máscaras - a que ele pinta para seu trabalho diurno como palhaço, e o disfarce que ele projeta em uma tentativa inútil de se sentir parte do mundo ao seu redor.
                     </Header.Text>
                     <Header.PlayButton>Play</Header.PlayButton>
                 </Header.Feature>
