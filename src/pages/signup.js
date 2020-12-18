@@ -9,10 +9,22 @@ import axios from "axios";
 import api from "../services/api";
 import * as ROUTES from '../constants/routes';
 
-const options = [
+const planOptions = [
   { value: 'Básico', label: 'Básico' },
   { value: 'Padrão', label: 'Padrão' },
   { value: 'Premium', label: 'Premium' }
+]
+
+const paymentOptions = [
+  {
+    value: 'billet', label: 'Boleto'
+  },
+  {
+    value: 'credit_card', label: 'Cartão de crédito'
+  },
+  {
+    value: 'picpay', label: 'Pic Pay'
+  }
 ]
 
 
@@ -27,7 +39,7 @@ const SignUp = (props) =>  {
   const [password, setPassword] = useState('');
   const [confirmation, setConfirmation] = useState('');
   const [plan, setplan] = useState('');
-  const [payment_method, setpayment_method] = useState('');
+  const [payment_method, setPaymentMethod] = useState('');
   const [error, setError] = useState('');
   
   const isInvalid = firstName === '' || emailAddress === '' || password === '' || confirmation === '';
@@ -50,7 +62,8 @@ const SignUp = (props) =>  {
       axios
         .post(`https://disney-flix.herokuapp.com/user`, user)
         .then(
-          ({data}) => {
+          ({ data }) => {
+            console.log(data)
             if(data.success) {
               alert("Conta criada com sucesso")
               history.push("/signin")
@@ -105,19 +118,15 @@ const SignUp = (props) =>  {
               onChange={({ target }) => setplan(target.value)}
             /> */}
 
-            
-
-            <Form.Input
-              type="text"
-              value={payment_method}
-              autoComplete="off"
-              placeholder="Pagamento"
-              onChange={({ target }) => setpayment_method(target.value)}
+            <Select
+            options = {paymentOptions}
+            placeholder = "Pagamento"
+            onChange={({ value }) => setPaymentMethod(value)}
             />
 
+            <br></br>
             <Select
-            defaultValue={options[1]}
-            options = {options}
+            options = {planOptions}
             placeholder = "Plano"
             onChange={({ value }) => setplan(value)}
             />
