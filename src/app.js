@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { Home, Browse, Signin, Signup, createProfile } from './pages';
+import { Home, Browse, Signin, Signup, createProfile, ManageProfile } from './pages';
 import * as ROUTES from './constants/routes';
 import { IsUserRedirect, ProtectedRoute } from './helpers/routes';
 import ScrollToTop from './utils/ScrollToTop'
@@ -14,58 +14,58 @@ export default function App() {
  
   */
   return (
-  <Router>
-    <ScrollToTop />
-    <Switch>
-      <IsUserRedirect 
-        user={user}
-        loggedInPath={ROUTES.BROWSE} 
-        path={ROUTES.SIGN_IN}
-        component={Signin}
-      >
-        
-      </IsUserRedirect>
+    <Router>
+      <ScrollToTop />
+      <Switch>
+        <IsUserRedirect
+          user={user}
+          loggedInPath={ROUTES.BROWSE}
+          path={ROUTES.SIGN_IN}
+          component={Signin}
+        >
 
-      <IsUserRedirect 
-        user={user} 
-        loggedInPath={ROUTES.BROWSE} 
-        path={ROUTES.SIGN_UP}
-        component={Signup}
-      >
-      <Browse />
-      </IsUserRedirect>
+        </IsUserRedirect>
 
-      <IsUserRedirect 
-        user={user} 
-        loggedInPath={ROUTES.BROWSE} 
-        path={ROUTES.BROWSE}
-        component={Browse}
-      >
-        <Browse />
-      </IsUserRedirect>
+        <IsUserRedirect
+          user={user}
+          loggedInPath={ROUTES.BROWSE}
+          path={ROUTES.SIGN_UP}
+          component={Signup}
+        >
+          <Browse />
+        </IsUserRedirect>
 
-      {/* <IsUserRedirect 
-        user={user}
-        loggedInPath={ROUTES.BROWSE} 
-        path={ROUTES.CREATEPROFILE}
-        component={createProfile}
-      >
-        
-      </IsUserRedirect>    */}
+        <IsUserRedirect
+          user={user}
+          loggedInPath={ROUTES.BROWSE}
+          path={ROUTES.BROWSE}
+          component={Browse}
+        >
+          <Browse />
+        </IsUserRedirect>
 
-      {/* <ProtectedRoute 
+        <IsUserRedirect
+          user={user}
+          loggedInPath={ROUTES.BROWSE}
+          path={ROUTES.MANAGEPROFILE}
+          component={ManageProfile}
+        >
+
+        </IsUserRedirect>
+
+        {/* <ProtectedRoute 
         user={user} 
         path={ROUTES.BROWSE}>
       </ProtectedRoute> */}
 
-      <IsUserRedirect 
-        user={user} 
-        loggedInPath={ROUTES.BROWSE} 
-        path={ROUTES.HOME}
-      >
-        <Home />
-      </IsUserRedirect>
-    </Switch>
-  </Router>
+        <IsUserRedirect
+          user={user}
+          loggedInPath={ROUTES.BROWSE}
+          path={ROUTES.HOME}
+        >
+          <Home />
+        </IsUserRedirect>
+      </Switch>
+    </Router>
   );
 }

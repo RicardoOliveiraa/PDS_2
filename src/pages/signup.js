@@ -5,9 +5,10 @@ import { HeaderContainer } from '../containers/header';
 import { FooterContainer } from '../containers/footer';
 import Select from 'react-select';
 import axios from "axios";
-
+import chroma from 'chroma-js';
 import api from "../services/api";
 import * as ROUTES from '../constants/routes';
+import { useTheme } from 'styled-components';
 
 const planOptions = [
   { value: 'Básico', label: 'Básico' },
@@ -27,9 +28,17 @@ const paymentOptions = [
   }
 ]
 
+const customStyles = {
+  control: () => ({
+    backgroundColor: "#333",
+    marginBottom: 30,
+    borderRadius: 4,
+  }),
+
+}
 
 
-const SignUp = (props) =>  {
+const SignUp = (props) => {
   const prop_email = props.location.state
     ? props.location.state.prop_email
     : ''
@@ -41,7 +50,7 @@ const SignUp = (props) =>  {
   const [plan, setplan] = useState('');
   const [payment_method, setPaymentMethod] = useState('');
   const [error, setError] = useState('');
-  
+
   const isInvalid = firstName === '' || emailAddress === '' || password === '' || confirmation === '';
 
   const handleSignup = (event) => {
@@ -56,7 +65,11 @@ const SignUp = (props) =>  {
       plan: plan,
     };
 
-      const isValidEmail = emailAddress.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+
+
+
+    const isValidEmail = emailAddress.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+
 
     if (isValidEmail) {
       axios
@@ -64,20 +77,22 @@ const SignUp = (props) =>  {
         .then(
           ({ data }) => {
             console.log(data)
-            if(data.success) {
+            if (data.success) {
               alert("Conta criada com sucesso")
               history.push("/signin")
             } else {
               const message = data.message
               alert(message ? message : "Aconteceu algum erro na criação da sua conta")
             }
-        })
+          })
     } else {
       alert("Email com formato inválido")
     }
   }
 
+
   return (
+
     <>
       <HeaderContainer>
         <Form>
@@ -93,9 +108,9 @@ const SignUp = (props) =>  {
             />
             <Form.Input
               placeholder="Email"
-              value={ emailAddress }
+              value={emailAddress}
               onChange={({ target }) => setEmailAddress(target.value)}
-            />            
+            />
             <Form.Input
               type="password"
               value={password}
@@ -110,7 +125,7 @@ const SignUp = (props) =>  {
               placeholder="Confirme a senha"
               onChange={({ target }) => setConfirmation(target.value)}
             />
-             {/* <Form.Input
+            {/* <Form.Input
               type="text"
               value={plan}
               autoComplete="off"
@@ -118,17 +133,21 @@ const SignUp = (props) =>  {
               onChange={({ target }) => setplan(target.value)}
             /> */}
 
+
             <Select
-            options = {paymentOptions}
-            placeholder = "Pagamento"
-            onChange={({ value }) => setPaymentMethod(value)}
+              styles={customStyles}
+              options={paymentOptions}
+              placeholder="Pagamento"
+              onChange={({ value }) => setPaymentMethod(value)}
+
             />
 
-            <br></br>
             <Select
-            options = {planOptions}
-            placeholder = "Plano"
-            onChange={({ value }) => setplan(value)}
+
+              styles={customStyles}
+              options={planOptions}
+              placeholder="Plano"
+              onChange={({ value }) => setplan(value)}
             />
 
             <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-up">
@@ -139,7 +158,7 @@ const SignUp = (props) =>  {
           <Form.Text>
             Já é usuário da DisneyFlix? <Form.Link to="/signin">Faça seu login.</Form.Link>
           </Form.Text>
-          
+
         </Form>
       </HeaderContainer>
       <FooterContainer />

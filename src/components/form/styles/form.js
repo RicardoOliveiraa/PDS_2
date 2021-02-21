@@ -73,6 +73,7 @@ export const Input = styled.input`
   }
 `;
 
+
 export const Submit = styled.button`
   background: #e50914;
   border-radius: 4px;
@@ -87,4 +88,7 @@ export const Submit = styled.button`
     opacity: 0.5;
   }
 `;
+
+
+
 

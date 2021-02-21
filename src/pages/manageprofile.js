@@ -7,6 +7,6 @@ import axios from "axios";
 import api from "../services/api";
 import * as ROUTES from '../constants/routes';
 
-export function createprofile() {    
-    return <p>aqui porra</p>;
+export default function ManageProfile() {
+    return { ManageProfile };
 }
