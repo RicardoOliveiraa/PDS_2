@@ -11,7 +11,16 @@ import axios from 'axios'
 
 //Name, seen_movies, liked_categorys
 export function SelectProfileContainer({ user, setProfile }) {
-    console.log("nao é que passamos pra ca?", setProfile)
+    const [shouldManageProfile, setShouldManageProfile] = useState(false)
+    const [firstName, setFirstName] = useState('');
+    const [newUserName, setNewUserName] = useState('');
+    const isInvalid = firstName === '';
+    const handleNewuser = (event) => {
+        const user = {
+            name: firstName,
+        };
+    }
+
     const profiles = user.profile_users.map((user) =>
         <Profiles.List>
             <Profiles.User
@@ -29,46 +38,52 @@ export function SelectProfileContainer({ user, setProfile }) {
                 <Profiles.Picture src={user.picture} />
                 <Profiles.Name> {user.name} </Profiles.Name>
             </Profiles.User>
-            <Profiles.Delete />
+            {
+                shouldManageProfile && <Profiles.Delete />
+            }
+
         </Profiles.List>
     )
 
 
+    return (
+        <>
+            <Profiles.List>
+                <Header bg={false}>
+                    <Header.Frame>
+                        <Header.Logo to={ROUTES.HOME} src={logo} alt="Disneyflix" />
+                    </Header.Frame>
+                </Header>
+                <Profiles>
+                    <Profiles.Title>Quem está assistindo?</Profiles.Title>
 
-    const [firstName, setFirstName] = useState('');
-
-
-    const isInvalid = firstName === '';
-
-    const handleNewuser = (event) => {
-        const user = {
-            name: firstName,
-        };
-    }
-
-    return <Profiles.List>
-        <Header bg={false}>
-            <Header.Frame>
-                <Header.Logo to={ROUTES.HOME} src={logo} alt="Disneyflix" />
-            </Header.Frame>
-        </Header>
-        <Profiles>
-            <Profiles.Title>Quem está assistindo?</Profiles.Title>
-
-            {profiles}
-            <Form>
-                <Profiles.Manage> Novo Passageiro na DisneyLand</Profiles.Manage>
-                <Form.Input
-                    type="text"
-                    placeholder="Nome"
-                    value={firstName}
-                    onChange={({ target }) => setFirstName(target.value)}
-                />
-                <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-up">
-                    Adicionar
-            </Form.Submit>
-            </Form>
-
-        </Profiles>
-    </Profiles.List>
+                    {profiles}
+                    <Profiles.Manage
+                        onClick={
+                            () => {
+                                setShouldManageProfile(!shouldManageProfile)
+                                console.log("aqui essa porra!", shouldManageProfile)
+                            }
+                        }
+                    > Gerenciar Passageiros na DisneyLand</Profiles.Manage>
+                    <div>
+                        {
+                            shouldManageProfile
+                            && <Form>
+                                <Form.Input
+                                    type="text"
+                                    placeholder="Nome"
+                                    value={newUserName}
+                                    onChange={({ target }) => setNewUserName(target.value)}
+                                />
+                                <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-up">
+                                    Adicionar
+									</Form.Submit>
+                            </Form>
+                        }
+                    </div>
+                </Profiles>
+            </Profiles.List>
+        </>
+    )
 }

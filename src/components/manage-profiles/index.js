@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Title, List, Item, Picture, Name, Manage } from './styles/profiles';
+import { Container, Title, List, Item, Picture, Name, Manage, Delete } from './styles/profiles';
 
-export default function Profiles({ children, ...restProps }) {
+export default function ManageProfile({ children, ...restProps }) {
     return <Container {...restProps}>{children}</Container>;
 }
 
@@ -19,6 +19,10 @@ Profiles.User = function ProfilesUser({ children, ...restProps }) {
 
 Profiles.Manage = function ProfilesManage({ children, ...restProps }) {
     return <Manage {...restProps}>{children}</Manage>;
+};
+
+Profiles.Delete = function ProfilesDelete({ children, ...restProps }) {
+    return <Delete {...restProps}>X</Delete>;
 };
 
 Profiles.Picture = function ProfilesPicture({ src, ...restProps }) {

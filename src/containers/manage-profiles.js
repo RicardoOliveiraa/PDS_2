@@ -3,8 +3,11 @@ import * as ROUTES from '../constants/routes'
 import logo from '../logo.svg'
 import { Header } from '../components'
 import { Profiles } from '../components'
-import { Container, Title, List, Item, Picture, Name, Manage } from '../components/profiles/styles/profiles';
+import { Container, Title, List, Item, Picture, Name, Manage, Delete } from '../components/manage-profiles/styles/manage-profiles';
+import { Form } from '../components';
 import axios from 'axios'
+
+
 
 //Name, seen_movies, liked_categorys
 export function ManageProfile({ user, setProfile }) {
@@ -26,8 +29,23 @@ export function ManageProfile({ user, setProfile }) {
                 <Profiles.Picture src={user.picture} />
                 <Profiles.Name> {user.name} </Profiles.Name>
             </Profiles.User>
+            <Profiles.Delete />
         </Profiles.List>
     )
+
+
+
+    const [firstName, setFirstName] = useState('');
+
+
+    const isInvalid = firstName === '';
+
+    const handleNewuser = (event) => {
+        const user = {
+            name: firstName,
+        };
+    }
+
     return <Profiles.List>
         <Header bg={false}>
             <Header.Frame>
@@ -36,8 +54,21 @@ export function ManageProfile({ user, setProfile }) {
         </Header>
         <Profiles>
             <Profiles.Title>Quem está assistindo?</Profiles.Title>
+
             {profiles}
-            <Profiles.Manage>Add Cpx na DisneyLand</Profiles.Manage>
+            <Form>
+                <Profiles.Manage> Novo Passageiro na DisneyLand</Profiles.Manage>
+                <Form.Input
+                    type="text"
+                    placeholder="Nome"
+                    value={firstName}
+                    onChange={({ target }) => setFirstName(target.value)}
+                />
+                <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-up">
+                    Adicionar
+            </Form.Submit>
+            </Form>
+
         </Profiles>
     </Profiles.List>
 }

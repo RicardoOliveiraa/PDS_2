@@ -54,8 +54,31 @@ export const Manage = styled.button`
   display: inline-block;
   font-size: 22px;
   margin: 2px 2px;
-  margin-top: 20px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  // cursor: pointer;
+  // &:hover{
+  //   border: 3px solid white;
+  //   color: white;
+  //   opacity: 1;
+  }
+`;
+export const Delete = styled.button`
+  background-color: black;
+  border: none;
+  color: white;
+  padding-bottom: 175px;
+  text-align: center;
+  font-size: 16px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
   cursor: pointer;
+  &:hover{
+    color: red;
+    opacity: 1;
+  }
 `;
 
 export const Item = styled.li`
@@ -74,6 +97,4 @@ export const Item = styled.li`
   &:last-of-type {
     margin-right: 0;
   }
-
-
 `;

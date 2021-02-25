@@ -29,6 +29,8 @@ Install dependecies...
 
 ```sh
 $ yarn install
+ou
+$ npm start
 ```
 
 

@@ -55,12 +55,11 @@ export const Manage = styled.button`
   font-size: 22px;
   margin: 2px 2px;
   margin-top: 50px;
-  margin-bottom: 50px;
-  // cursor: pointer;
-  // &:hover{
-  //   border: 3px solid white;
-  //   color: white;
-  //   opacity: 1;
+  cursor: pointer;
+  &:hover{
+    border: 3px solid white;
+    color: white;
+    opacity: 1;
   }
 `;
 export const Delete = styled.button`

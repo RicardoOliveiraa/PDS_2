@@ -8,5 +8,6 @@ import api from "../services/api";
 import * as ROUTES from '../constants/routes';
 
 export default function ManageProfile() {
-    return { ManageProfile };
+    return <p>p</p>
+    // { ManageProfile };
 }

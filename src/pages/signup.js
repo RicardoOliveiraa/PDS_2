@@ -143,7 +143,6 @@ const SignUp = (props) => {
             />
 
             <Select
-
               styles={customStyles}
               options={planOptions}
               placeholder="Plano"
