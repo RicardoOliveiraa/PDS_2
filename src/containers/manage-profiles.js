@@ -46,29 +46,78 @@ export function ManageProfile({ user, setProfile }) {
         };
     }
 
-    return <Profiles.List>
-        <Header bg={false}>
-            <Header.Frame>
-                <Header.Logo to={ROUTES.HOME} src={logo} alt="Disneyflix" />
-            </Header.Frame>
-        </Header>
-        <Profiles>
-            <Profiles.Title>Quem está assistindo?</Profiles.Title>
+    return (
 
-            {profiles}
-            <Form>
-                <Profiles.Manage> Novo Passageiro na DisneyLand</Profiles.Manage>
-                <Form.Input
-                    type="text"
-                    placeholder="Nome"
-                    value={firstName}
-                    onChange={({ target }) => setFirstName(target.value)}
-                />
-                <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-up">
-                    Adicionar
-            </Form.Submit>
-            </Form>
+        <>
+            <HeaderContainer>
+                <Form>
+                    <Form.Title>Cadastre-se</Form.Title>
+                    {error && <Form.Error>{error}</Form.Error>}
 
-        </Profiles>
-    </Profiles.List>
+                    <Form.Base onSubmit={handleSignup} method="POST">
+                        <Form.Input
+                            type="text"
+                            placeholder="Nome"
+                            value={firstName}
+                            onChange={({ target }) => setFirstName(target.value)}
+                        />
+                        <Form.Input
+                            placeholder="Email"
+                            value={emailAddress}
+                            onChange={({ target }) => setEmailAddress(target.value)}
+                        />
+                        <Form.Input
+                            type="password"
+                            value={password}
+                            autoComplete="off"
+                            placeholder="Senha"
+                            onChange={({ target }) => setPassword(target.value)}
+                        />
+                        <Form.Input
+                            type="password"
+                            value={confirmation}
+                            autoComplete="off"
+                            placeholder="Confirme a senha"
+                            onChange={({ target }) => setConfirmation(target.value)}
+                        />
+                        {/* <Form.Input
+                  type="text"
+                  value={plan}
+                  autoComplete="off"
+                  placeholder="Plano"
+                  onChange={({ target }) => setplan(target.value)}
+                /> */}
+
+
+                        <Select
+                            styles={customStyles}
+                            options={paymentOptions}
+                            placeholder="Pagamento"
+                            onChange={({ value }) => setPaymentMethod(value)}
+
+                        />
+
+                        <Select
+                            styles={customStyles}
+                            options={planOptions}
+                            placeholder="Plano"
+                            onChange={({ value }) => setplan(value)}
+                        />
+
+                        <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-up">
+                            Cadastrar-se
+                </Form.Submit>
+                    </Form.Base>
+
+                    <Form.Text>
+                        Já é usuário da DisneyFlix? <Form.Link to="/signin">Faça seu login.</Form.Link>
+                    </Form.Text>
+
+                </Form>
+            </HeaderContainer>
+            <FooterContainer />
+        </>
+    );
 }
+
+export default ManageProfile
