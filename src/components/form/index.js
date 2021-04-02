@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Error, Base, Title, Text, TextSmall, Link, Input, Submit, } from './styles/form';
+import { Container, Error, Base, Title, Button, Text, TextSmall, Link, Input, Submit, } from './styles/form';
 
 export default function Form({ children, ...restProps }) {
   return <Container {...restProps}>{children}</Container>;
@@ -33,6 +33,14 @@ Form.Input = function FormInput({ children, ...restProps }) {
   return <Input {...restProps}>{children}</Input>;
 };
 
+Form.InputFile = function FormInput({ children, ...restProps }) {
+  return <Input type="file"  {...restProps}>{children}</Input>;
+};
+
 Form.Submit = function FormSubmit({ children, ...restProps }) {
   return <Submit {...restProps}>{children}</Submit>;
+};
+
+Form.Button = function FormButton({ children, ...restProps }) {
+  return <Button {...restProps}>{children}</Button>;
 };

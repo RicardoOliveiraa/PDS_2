@@ -7,32 +7,26 @@ import Select from 'react-select';
 import api from "../services/api";
 import * as ROUTES from '../constants/routes';
 
-const ManageProfile = (props) => {
+const ManageUpload = (props) => {
     const prop_email = props.location.state
         ? props.location.state.prop_email
         : ''
-    const history = useHistory();
-    const [monieName, setmonieName] = useState('');
-    const [emailAddress, setEmailAddress] = useState(prop_email);
-    const [password, setPassword] = useState('');
+    const [movieName, setMovieName] = useState('');
+    const [movieFile, setMovieFile] = useState('');
+    const [movieDescription, setMovieDescription] = useState('')
     const [error, setError] = useState('');
+    const hiddenFileInput = React.useRef(null);
 
-    const isInvalid = monieName === '' || emailAddress === '' || password === '';
+    const isInvalid = movieName === '' || movieFile === '';
 
-    const handleManageProfile = (event) => {
+    const handleManageUpload = (event) => {
         event.preventDefault();
-        const user = {
-            name: monieName,
-            password,
-            email: emailAddress,
-
+        const uploadMovie = {
+            name: movieName,
+            movieFile: movieFile,
+            movieDescription: movieDescription
         };
     };
-
-
-
-
-
 
 
 
@@ -41,38 +35,37 @@ const ManageProfile = (props) => {
         <>
             <HeaderContainer>
                 <Form>
-                    <Form.Title>Manda um Filminho ai pf</Form.Title>
+                    <Form.Title>Preencha os campos para enviar um filme.</Form.Title>
                     {error && <Form.Error>{error}</Form.Error>}
-
-                    <Form.Base onSubmit={handleManageProfile} method="POST">
+                    <Form.Base onSubmit={handleManageUpload} method="POST">
                         <Form.Input
                             type="text"
                             placeholder="Nome do Filme"
-                            value={monieName}
-                            onChange={({ target }) => setmonieName(target.value)}
+                            value={movieName}
+                            onChange={({ target }) => setMovieName(target.value)}
                         />
                         <Form.Input
-                            placeholder="Email"
-                            value={emailAddress}
-                            onChange={({ target }) => setEmailAddress(target.value)}
+                            type="text"
+                            placeholder="Descrição do Filme"
+                            value={movieDescription}
+                            onChange={({ target }) => setMovieDescription(target.value)}
                         />
-                        <Form.Input
-                            type="password"
-                            value={password}
-                            autoComplete="off"
-                            placeholder="Senha"
-                            onChange={({ target }) => setPassword(target.value)}
+                        <Form.Button 
+                            // onClick={handleClick}
+                        >
+                            Clique e faça o upload do arquivo
+                        </Form.Button>
+                        <Form.InputFile
+                            ref={hiddenFileInput}
+                            value={movieFile}
+                            onChange={({ target }) => setMovieFile(target.value)}
+                            style={{display: 'none'}}
                         />
-
-
                         <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-up">
-                            Cadastrar-se
-                </Form.Submit>
+                            Enviar o novo filme
+                        </Form.Submit>
                     </Form.Base>
 
-                    <Form.Text>
-                        Já é usuário da DisneyFlix? <Form.Link to="/signin">Faça seu login.</Form.Link>
-                    </Form.Text>
 
                 </Form>
             </HeaderContainer>
@@ -83,4 +76,4 @@ const ManageProfile = (props) => {
 
 
 
-export default ManageProfile
+export default ManageUpload
