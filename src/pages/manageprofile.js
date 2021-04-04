@@ -8,27 +8,26 @@ import api from "../services/api";
 import * as ROUTES from '../constants/routes';
 
 const ManageUpload = (props) => {
-    const prop_email = props.location.state
-        ? props.location.state.prop_email
-        : ''
     const [movieName, setMovieName] = useState('');
     const [movieFile, setMovieFile] = useState('');
+    const [movieGender, setMovieGender] = useState('');
     const [movieDescription, setMovieDescription] = useState('')
     const [error, setError] = useState('');
     const hiddenFileInput = React.useRef(null);
 
-    const isInvalid = movieName === '' || movieFile === '';
-
+    const isInvalid = movieName === '' || movieFile === '' || movieGender === '' || movieDescription === '';
+    const handleClick = () => {
+        document.getElementById("selectMovie").click()
+    };
     const handleManageUpload = (event) => {
         event.preventDefault();
         const uploadMovie = {
             name: movieName,
             movieFile: movieFile,
+            movieGender: movieGender,
             movieDescription: movieDescription
         };
     };
-
-
 
     return (
 
@@ -46,27 +45,31 @@ const ManageUpload = (props) => {
                         />
                         <Form.Input
                             type="text"
+                            placeholder="Categoria do Filme"
+                            value={movieGender}
+                            onChange={({ target }) => setMovieGender(target.value)}
+                        />
+                        <Form.Input
+                            type="text"
                             placeholder="Descrição do Filme"
                             value={movieDescription}
                             onChange={({ target }) => setMovieDescription(target.value)}
                         />
                         <Form.Button 
-                            // onClick={handleClick}
+                            onClick={handleClick}
                         >
                             Clique e faça o upload do arquivo
                         </Form.Button>
                         <Form.InputFile
-                            ref={hiddenFileInput}
+                            id='selectMovie'
                             value={movieFile}
                             onChange={({ target }) => setMovieFile(target.value)}
-                            style={{display: 'none'}}
+                            hidden 
                         />
                         <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-up">
                             Enviar o novo filme
                         </Form.Submit>
                     </Form.Base>
-
-
                 </Form>
             </HeaderContainer>
             <FooterContainer />
