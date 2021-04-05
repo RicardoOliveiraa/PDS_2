@@ -36,14 +36,19 @@ const customStyles = {
   }),
   control: provided => ({
     backgroundColor: "#333",
-    marginBottom: 30,
-    padding: 6,
-    color: "#A0A0A0",
+    marginBottom: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
     borderRadius: 4,
+    display: 'flex'
   }),
-  singleValue: (provided) => ({
-    color: "green",
-    marginLeft: 10,
+  placeholder: () => ({
+    color: '#757575',
+    marginLeft: 15
+  }),
+  singleValue: () => ({
+    color: '#757575',
+    marginLeft: 15
   }),
 
 }
