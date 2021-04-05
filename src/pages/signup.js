@@ -29,10 +29,21 @@ const paymentOptions = [
 ]
 
 const customStyles = {
-  control: () => ({
+  
+   option: provided => ({
+    backgroundColor: "#0000",  
+    marginTop: 0,
+  }),
+  control: provided => ({
     backgroundColor: "#333",
     marginBottom: 30,
+    padding: 6,
+    color: "#A0A0A0",
     borderRadius: 4,
+  }),
+  singleValue: (provided) => ({
+    color: "green",
+    marginLeft: 10,
   }),
 
 }
