@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import { Form } from '../components';
 import { HeaderContainer } from '../containers/header';
 import { FooterContainer } from '../containers/footer';
-import Select from 'react-select';
 import api from "../services/api";
 import * as ROUTES from '../constants/routes';
+import axios from 'axios';
 
 const ManageUpload = (props) => {
     const [movieName, setMovieName] = useState('');
@@ -15,18 +15,36 @@ const ManageUpload = (props) => {
     const [error, setError] = useState('');
     const hiddenFileInput = React.useRef(null);
 
-    const isInvalid = movieName === '' || movieFile === '' || movieGender === '' || movieDescription === '';
+    const isInvalid = movieName === '' || movieFile === '' || movieGender === '' ;
     const handleClick = () => {
         document.getElementById("selectMovie").click()
     };
     const handleManageUpload = (event) => {
         event.preventDefault();
         const uploadMovie = {
-            name: movieName,
-            movieFile: movieFile,
-            movieGender: movieGender,
-            movieDescription: movieDescription
+            title: movieName,
+            gender: movieGender,
+            drive_path: movieFile,
+            studio: movieDescription
         };
+
+        console.log(uploadMovie)
+
+        // if (Se o filme não for de peso maior que tal){}
+        axios
+            .post(`https://disney-flix.herokuapp.com/movie`, uploadMovie)
+            .then(
+                ({elem}) => {
+                    console.log(elem)
+                    if(elem.success) {
+                        alert(elem.message)
+                    } else {
+                        alert(elem.message ? elem.message : 'Aconteceu algum erro na hora de fazer o upload do filme!')
+                    }
+                })
+        // else{
+        //     alert('O filme pesar menos que tanto')
+        // }        
     };
 
     return (
@@ -55,18 +73,20 @@ const ManageUpload = (props) => {
                             value={movieDescription}
                             onChange={({ target }) => setMovieDescription(target.value)}
                         />
-                        <Form.Button 
-                            onClick={handleClick}
+                        <Form.Input
+                            readOnly
+                            placeholder="Clique e faça o upload do arquivo"
+                            onClick={handleClick}                            
                         >
-                            Clique e faça o upload do arquivo
-                        </Form.Button>
+                        </Form.Input>
                         <Form.InputFile
                             id='selectMovie'
                             value={movieFile}
                             onChange={({ target }) => setMovieFile(target.value)}
                             hidden 
                         />
-                        <Form.Submit disabled={isInvalid} type="submit" data-testid="sign-up">
+                        <Form.Submit disabled={isInvalid} type="submit" >
+                        {/* data-testid="sign-up" */}
                             Enviar o novo filme
                         </Form.Submit>
                     </Form.Base>
@@ -76,7 +96,5 @@ const ManageUpload = (props) => {
         </>
     );
 }
-
-
 
 export default ManageUpload
