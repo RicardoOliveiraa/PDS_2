@@ -24,15 +24,16 @@ const ManageUpload = (props) => {
         const uploadMovie = {
             title: movieName,
             gender: movieGender,
-            drive_path: movieFile,
+            file: movieFile,
             studio: movieDescription
         };
 
-        console.log(uploadMovie)
-
-        // if (Se o filme não for de peso maior que tal){}
+        var input = document.getElementById('selectMovie');
+        var file = input.files[0]; 
+        var MaxMovieSize = 10485760 //10MB
+        if (file.size <= MaxMovieSize && file.type === 'video/mp4'){
         axios
-            .post(`https://disney-flix.herokuapp.com/movie`, uploadMovie)
+            .post(`https://disney-flix.herokuapp.com/auth/movie`, uploadMovie)
             .then(
                 ({elem}) => {
                     console.log(elem)
@@ -42,9 +43,9 @@ const ManageUpload = (props) => {
                         alert(elem.message ? elem.message : 'Aconteceu algum erro na hora de fazer o upload do filme!')
                     }
                 })
-        // else{
-        //     alert('O filme pesar menos que tanto')
-        // }        
+        } else{
+            alert('O filme deve ter um tamanho menor ou igual a 10MB e o arquivo deve ser no formato MP4!')
+        }        
     };
 
     return (
@@ -54,7 +55,8 @@ const ManageUpload = (props) => {
                 <Form>
                     <Form.Title>Preencha os campos para enviar um filme.</Form.Title>
                     {error && <Form.Error>{error}</Form.Error>}
-                    <Form.Base onSubmit={handleManageUpload} method="POST">
+                    <Form.Base onSubmit={handleManageUpload} method="POST" enctype="multipart/form-data">
+                    {/* <form method="POST" enctype="multipart/form-data" > */}
                         <Form.Input
                             type="text"
                             placeholder="Nome do Filme"
@@ -77,16 +79,16 @@ const ManageUpload = (props) => {
                             readOnly
                             placeholder="Clique e faça o upload do arquivo"
                             onClick={handleClick}                            
+                            hidden 
                         >
                         </Form.Input>
                         <Form.InputFile
                             id='selectMovie'
                             value={movieFile}
                             onChange={({ target }) => setMovieFile(target.value)}
-                            hidden 
+                            
                         />
                         <Form.Submit disabled={isInvalid} type="submit" >
-                        {/* data-testid="sign-up" */}
                             Enviar o novo filme
                         </Form.Submit>
                     </Form.Base>
