@@ -14,6 +14,8 @@ const ManageUpload = (props) => {
     const [movieDescription, setMovieDescription] = useState('')
     const [error, setError] = useState('');
     const hiddenFileInput = React.useRef(null);
+    
+    const Token = sessionStorage.getItem('token')
 
     const isInvalid = movieName === '' || movieFile === '' || movieGender === '' ;
     const handleClick = () => {
@@ -21,31 +23,40 @@ const ManageUpload = (props) => {
     };
     const handleManageUpload = (event) => {
         event.preventDefault();
+        console.log('movieFile',movieFile)
+        
         const uploadMovie = {
             title: movieName,
             gender: movieGender,
             file: movieFile,
             studio: movieDescription
         };
+        console.log('uploadMovie', uploadMovie)
+        let formData = new FormData();
 
-        var input = document.getElementById('selectMovie');
-        var file = input.files[0]; 
+        formData.append('title', movieName)
+        formData.append('gender', movieGender);
+        formData.append('file', movieFile);
+        formData.append('studio', movieDescription);
+
+        console.log(formData)
         var MaxMovieSize = 10485760 //10MB
-        if (file.size <= MaxMovieSize && file.type === 'video/mp4'){
+        if (movieFile.size <= MaxMovieSize && movieFile.type === 'video/mp4'){
         axios
-            .post(`https://disney-flix.herokuapp.com/auth/movie`, uploadMovie)
+            .post(`https://disney-flix.herokuapp.com/auth/movie`, formData, { headers: { 'Authorization': `${Token}`}, "Content-type": "multipart/form-data",})
             .then(
-                ({elem}) => {
+                (elem) => {
                     console.log(elem)
-                    if(elem.success) {
-                        alert(elem.message)
+                    if(elem.data.success) {
+                        alert(elem.data.message)
                     } else {
-                        alert(elem.message ? elem.message : 'Aconteceu algum erro na hora de fazer o upload do filme!')
+                        alert(elem.data.message ? elem.data.message : 'Aconteceu algum erro na hora de fazer o upload do filme!')
                     }
                 })
         } else{
             alert('O filme deve ter um tamanho menor ou igual a 10MB e o arquivo deve ser no formato MP4!')
-        }        
+        }    
+        
     };
 
     return (
@@ -56,7 +67,6 @@ const ManageUpload = (props) => {
                     <Form.Title>Preencha os campos para enviar um filme.</Form.Title>
                     {error && <Form.Error>{error}</Form.Error>}
                     <Form.Base onSubmit={handleManageUpload} method="POST" enctype="multipart/form-data">
-                    {/* <form method="POST" enctype="multipart/form-data" > */}
                         <Form.Input
                             type="text"
                             placeholder="Nome do Filme"
@@ -84,9 +94,8 @@ const ManageUpload = (props) => {
                         </Form.Input>
                         <Form.InputFile
                             id='selectMovie'
-                            value={movieFile}
-                            onChange={({ target }) => setMovieFile(target.value)}
-                            
+                            // value={movieFile}
+                            onChange={({ target }) => setMovieFile(target.files[0])}                            
                         />
                         <Form.Submit disabled={isInvalid} type="submit" >
                             Enviar o novo filme
