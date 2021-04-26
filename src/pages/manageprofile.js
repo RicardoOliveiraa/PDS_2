@@ -6,6 +6,9 @@ import { FooterContainer } from '../containers/footer';
 import api from "../services/api";
 import * as ROUTES from '../constants/routes';
 import axios from 'axios';
+import { Header } from '../components';
+import logo from '../logo.svg';
+
 
 const ManageUpload = (props) => {
     const [movieName, setMovieName] = useState('');
@@ -81,8 +84,13 @@ const ManageUpload = (props) => {
     return (
 
         <>
-            <HeaderContainer>
-                <Form.ContainerManage>
+            {/* <Form.Body> */}
+            <Header>
+                    <Form.Block>
+                        <Header.Logo to={ROUTES.HOME} alt="Disneyflix" src={logo} />
+                    </Form.Block>
+                    <Form.ContainerManage>
+                    
                     <Form.Title>Preencha os campos para enviar um filme.</Form.Title>
                     {error && <Form.Error>{error}</Form.Error>}
                     <Form.Manage onSubmit={handleManageUpload} method="POST" enctype="multipart/form-data">
@@ -114,20 +122,38 @@ const ManageUpload = (props) => {
                         <Form.MyLabel>
                             Faça o upload as imagens do Filme.
                         </Form.MyLabel>
-                        <Form.InputFile
-                            id='selectImage1'
-                            accept="image/*"
-                            onChange={({ target }) => setMovieImageBig(target.files[0])}                            
-                        />
-                                                
-                        <Form.InputFile
-                            id='selectImage2'
-                            onChange={({ target }) => setMovieImageMedium(target.files[0])}                            
-                        />
-                        <Form.InputFile
-                            id='selectImage3'
-                            onChange={({ target }) => setMovieImageSmall(target.files[0])}                            
-                        />
+                        
+                        <Form.BlockColumn>
+                            <Form.MyLabel for="big">
+                                Imagem Grande.
+                            </Form.MyLabel>
+                            <Form.InputFile
+                                name="big"
+                                id='selectImage1'
+                                accept="image/*"
+                                onChange={({ target }) => setMovieImageBig(target.files[0])}                            
+                            />
+                        </Form.BlockColumn>
+                        <Form.BlockColumn>
+                            <Form.MyLabel for="medium">
+                                Imagem Média.
+                            </Form.MyLabel>                        
+                            <Form.InputFile
+                                name="medium"
+                                id='selectImage2'
+                                onChange={({ target }) => setMovieImageMedium(target.files[0])}                            
+                            />
+                        </Form.BlockColumn>
+                        <Form.BlockColumn>
+                            <Form.MyLabel for="small">
+                                Imagem Pequena.
+                            </Form.MyLabel> 
+                            <Form.InputFile
+                                name="small"
+                                id='selectImage3'
+                                onChange={({ target }) => setMovieImageSmall(target.files[0])}                            
+                            />
+                        </Form.BlockColumn>
                         <Form.MyLabel>
                             Faça o upload do arquivo do Filme.
                         </Form.MyLabel>
@@ -136,13 +162,16 @@ const ManageUpload = (props) => {
                             // value={movieFile}
                             onChange={({ target }) => setMovieFile(target.files[0])}                            
                         />
-                        <Form.Submit  disabled={isInvalid} type="submit" >
-                            Enviar o novo filme
-                        </Form.Submit>
+                        <Form.Block>
+                            <Form.Submit  disabled={isInvalid} type="submit" >
+                                Enviar o novo filme
+                            </Form.Submit>
+                        </Form.Block>
+                        
                     </Form.Manage>
                 </Form.ContainerManage>
-            </HeaderContainer>
             <FooterContainer />
+            </Header>
         </>
     );
 }

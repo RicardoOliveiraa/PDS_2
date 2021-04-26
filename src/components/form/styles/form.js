@@ -1,6 +1,23 @@
 import styled from 'styled-components/macro';
 import { Link as ReachRouterLink } from 'react-router-dom';
 
+export const Body = styled.div`
+  background: url(${({ src }) => (src ? `../images/misc/${src}.jpg` : '../images/misc/home-bg.jpg')}) top left / cover
+    no-repeat;
+  @media (max-width: 1100px) {
+    ${({ dontShowOnSmallViewPort }) => dontShowOnSmallViewPort && `background: none;`}
+`;
+
+export const Block = styled.div`
+  display: flex;
+  width:100%;
+  justify-content:center;
+  margin: 20px 0;
+`;
+export const BlockColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -13,6 +30,7 @@ export const Container = styled.div`
   max-width: 450px;
   padding: 60px 68px 40px;
   margin-bottom: 100px;
+  
 `;
 
 
@@ -28,6 +46,8 @@ export const ContainerManage = styled.div`
   max-width: 80%;
   padding: 60px 68px 40px;
   margin-bottom: 100px;
+  margin-top: 40px;
+}
 `;
 export const Error = styled.div`
   background: #e87c03;
