@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useCallback, useRef, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form } from '../components';
 import { HeaderContainer } from '../containers/header';
@@ -12,6 +12,17 @@ const ManageUpload = (props) => {
     const [movieFile, setMovieFile] = useState('');
     const [movieGender, setMovieGender] = useState('');
     const [movieDescription, setMovieDescription] = useState('')
+    const [movieImageBig, setMovieImageBig] = useState('')
+    const [movieImageMedium, setMovieImageMedium] = useState('')
+    const [movieImageSmall, setMovieImageSmall] = useState('')
+    
+    const [upImg, setUpImg] = useState();
+    const imgRef = useRef(null);
+    const previewCanvasRef = useRef(null);
+    const [completedCrop, setCompletedCrop] = useState(null);
+    const [crop, setCrop] = useState({ unit: 'px', width: 200, height: 67, keepSelection:true, locked:true });
+    
+
     const [error, setError] = useState('');
     const hiddenFileInput = React.useRef(null);
     
@@ -21,6 +32,8 @@ const ManageUpload = (props) => {
     const handleClick = () => {
         document.getElementById("selectMovie").click()
     };
+
+    
     const handleManageUpload = (event) => {
         event.preventDefault();
         console.log('movieFile',movieFile)
@@ -29,7 +42,10 @@ const ManageUpload = (props) => {
             title: movieName,
             gender: movieGender,
             file: movieFile,
-            studio: movieDescription
+            studio: movieDescription, 
+            image_big: movieImageBig,
+            image_medium: movieImageMedium,
+            image_small: movieImageSmall
         };
         console.log('uploadMovie', uploadMovie)
         let formData = new FormData();
@@ -38,6 +54,9 @@ const ManageUpload = (props) => {
         formData.append('gender', movieGender);
         formData.append('file', movieFile);
         formData.append('studio', movieDescription);
+        formData.append('image_big', movieDescription);
+        formData.append('image_medium', movieDescription);
+        formData.append('image_small', movieDescription);
 
         console.log(formData)
         var MaxMovieSize = 10485760 //10MB
@@ -63,45 +82,65 @@ const ManageUpload = (props) => {
 
         <>
             <HeaderContainer>
-                <Form>
+                <Form.ContainerManage>
                     <Form.Title>Preencha os campos para enviar um filme.</Form.Title>
                     {error && <Form.Error>{error}</Form.Error>}
-                    <Form.Base onSubmit={handleManageUpload} method="POST" enctype="multipart/form-data">
-                        <Form.Input
+                    <Form.Manage onSubmit={handleManageUpload} method="POST" enctype="multipart/form-data">
+                        <Form.InputManage
                             type="text"
                             placeholder="Nome do Filme"
                             value={movieName}
                             onChange={({ target }) => setMovieName(target.value)}
                         />
-                        <Form.Input
+                        <Form.InputManage
                             type="text"
-                            placeholder="Categoria do Filme"
+                            placeholder="Genero do Filme"
                             value={movieGender}
                             onChange={({ target }) => setMovieGender(target.value)}
                         />
-                        <Form.Input
+                        <Form.TextArea
                             type="text"
                             placeholder="Descrição do Filme"
                             value={movieDescription}
                             onChange={({ target }) => setMovieDescription(target.value)}
                         />
-                        <Form.Input
+                        {/* <Form.Input
                             readOnly
                             placeholder="Clique e faça o upload do arquivo"
                             onClick={handleClick}                            
                             hidden 
                         >
-                        </Form.Input>
+                        </Form.Input> */}
+                        <Form.MyLabel>
+                            Faça o upload as imagens do Filme.
+                        </Form.MyLabel>
+                        <Form.InputFile
+                            id='selectImage1'
+                            accept="image/*"
+                            onChange={({ target }) => setMovieImageBig(target.files[0])}                            
+                        />
+                                                
+                        <Form.InputFile
+                            id='selectImage2'
+                            onChange={({ target }) => setMovieImageMedium(target.files[0])}                            
+                        />
+                        <Form.InputFile
+                            id='selectImage3'
+                            onChange={({ target }) => setMovieImageSmall(target.files[0])}                            
+                        />
+                        <Form.MyLabel>
+                            Faça o upload do arquivo do Filme.
+                        </Form.MyLabel>
                         <Form.InputFile
                             id='selectMovie'
                             // value={movieFile}
                             onChange={({ target }) => setMovieFile(target.files[0])}                            
                         />
-                        <Form.Submit disabled={isInvalid} type="submit" >
+                        <Form.Submit  disabled={isInvalid} type="submit" >
                             Enviar o novo filme
                         </Form.Submit>
-                    </Form.Base>
-                </Form>
+                    </Form.Manage>
+                </Form.ContainerManage>
             </HeaderContainer>
             <FooterContainer />
         </>
