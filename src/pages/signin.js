@@ -26,9 +26,14 @@ export default function SignIn() {
         .then(
           ({ data }) => {
             if (data.success) {
-              console.log(data.user)
+              sessionStorage.setItem('token', data.token)
+              console.log(data)
               localStorage.setItem('user', JSON.stringify(data.user))
-              history.push("/browse")
+              if(data.user.role == 'admin') {
+                history.push("/manageprofile")
+              } else{
+                history.push("/browse")  
+              }
             } else {
               alert("Senha ou email incorreto")
             }
