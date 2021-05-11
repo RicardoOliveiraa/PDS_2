@@ -39,42 +39,29 @@ const ManageUpload = (props) => {
     
     const handleManageUpload = (event) => {
         event.preventDefault();
-        console.log('movieFile',movieFile)
-        
-        const uploadMovie = {
-            title: movieName,
-            gender: movieGender,
-            file: movieFile,
-            studio: movieDescription, 
-            image_big: movieImageBig,
-            image_medium: movieImageMedium,
-            image_small: movieImageSmall
-        };
-        console.log('uploadMovie', uploadMovie)
         let formData = new FormData();
 
         formData.append('title', movieName)
         formData.append('gender', movieGender);
-        formData.append('file', movieFile);
-        formData.append('studio', movieDescription);
-        formData.append('image_big', movieDescription);
-        formData.append('image_medium', movieDescription);
-        formData.append('image_small', movieDescription);
+        formData.append('movie', movieFile);
+        formData.append('description', movieDescription);
+        formData.append('image_big', movieImageBig);
+        formData.append('image_medium', movieImageMedium);
+        formData.append('image_small', movieImageSmall);
 
-        console.log(formData)
         var MaxMovieSize = 10485760 //10MB
         if (movieFile.size <= MaxMovieSize && movieFile.type === 'video/mp4'){
-        axios
-            .post(`https://disney-flix.herokuapp.com/auth/movie`, formData, { headers: { 'Authorization': `${Token}`}, "Content-type": "multipart/form-data",})
-            .then(
-                (elem) => {
-                    console.log(elem)
-                    if(elem.data.success) {
-                        alert(elem.data.message)
-                    } else {
-                        alert(elem.data.message ? elem.data.message : 'Aconteceu algum erro na hora de fazer o upload do filme!')
-                    }
-                })
+            axios
+                .post(`https://disney-flix.herokuapp.com/auth/movie`, formData, { headers: { 'Authorization': `${Token}`}, "Content-type": "multipart/form-data",})
+                .then(
+                    (elem) => {
+                        console.log(elem)
+                        if(elem.data.success) {
+                            alert(elem.data.message)
+                        } else {
+                            alert(elem.data.message ? elem.data.message : 'Aconteceu algum erro na hora de fazer o upload do filme!')
+                        }
+                    })
         } else{
             alert('O filme deve ter um tamanho menor ou igual a 10MB e o arquivo deve ser no formato MP4!')
         }    
