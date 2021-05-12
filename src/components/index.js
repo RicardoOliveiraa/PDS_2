@@ -8,5 +8,7 @@ export { default as Form } from './form';
 export { default as Profiles } from './profiles';
 export { default as Loading } from './loading';
 export { default as Card } from './card';
+export { default as ImageCropper } from './ImageCropper';
+
 // export { default as ManageProfile } from './manage-profile';
 export { default as Player } from './player';

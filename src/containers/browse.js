@@ -6,37 +6,117 @@ import { Card, Header, Loading, Player } from '../components'
 import * as ROUTES from '../constants/routes';
 import logo from '../logo.svg';
 import Fuse from 'fuse.js'
+import axios from 'axios';
+import { gapi } from 'gapi-script';
+// import {google} from 'googleapis';
+
+
 
 export function BrowseContainer ({slides}) {
     const history = useHistory();
     const user = JSON.parse(localStorage.getItem('user'))
+    const Token = sessionStorage.getItem('token')
 
-    const [category, setCategory] = useState('series');
+    const [category, setCategory] = useState('films');
     const [profile, setProfile] = useState({});
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
-    const [slideRows, setSlideRows] = useState([]);
+    const [slideRows, setSlideRows] = useState([]);  
+    const [files_drive, setFilesDrive] = useState([]);  
 
     useEffect(()=>{
-        console.log('profile', profile)
         setTimeout(()=>{
             setLoading(false)
         }, 3000)
     }, [profile.displayName])
 
+    async function  GetDriveElemById(id) {
+        const refresh_token = "1//046GmdRg_4Fe2CgYIARAAGAQSNwF-L9IrnEv5y7oFqxvJ8c_TVq1zd6sV0loXEJjgq5EMfgXhueApXMV-fmWimcmdEyRRtEwCIXY";
+        const client_id = "688648085961-48ol9p3qdqn8dq6nqoi2m2455rlqp84n.apps.googleusercontent.com";
+        const client_secret = "5O7JlAqGTutFWjttiyrpuPtN";
+        const refresh_url = "https://www.googleapis.com/oauth2/v3/token";
+        const post_body = `grant_type=refresh_token&client_id=${encodeURIComponent(client_id)}&client_secret=${encodeURIComponent(client_secret)}&refresh_token=${encodeURIComponent(refresh_token)}`;
+        
+        
+        axios
+        .post('https://www.googleapis.com/oauth2/v3/token',  {body: post_body ,headers: { 'Content-Type': 'application/x-www-form-urlencoded'}}).then((elem)=>{
+            console.log('com axios', elem)
+        }).catch((e)=>{
+            console.log('deu ruim',e)
+        })
+        
+        
+        
+        
+        
+        
+        
+        // let refresh_request = {
+        //     body: post_body,
+        //     method: "POST",
+        //     headers: new Headers({
+        //         'Content-Type': 'application/x-www-form-urlencoded'
+        //     })
+        // }
+        // const teste = await fetch(refresh_url, refresh_request).then( response => {
+        //         return(response.json());
+        //     }).then( response_json =>  {
+        //         const drive_url = `https://www.googleapis.com/drive/v3/files/${id}/?fields=thumbnailLink`;
+        //         let drive_request = {
+        //             method: "GET",
+        //             headers: new Headers({
+        //                 Authorization: "Bearer "+response_json.access_token
+        //             })                    
+        //         }
+        //         fetch(drive_url, drive_request).then( response => {
+        //             return(response.json());
+        //         }).then( file =>  {
+        //             console.log(file.thumbnailLink)
+        //             return file.thumbnailLink
+        //         });
+        // });
+        
+        // console.log('aaaaaaaa', teste)
+        // return 'urlFile'
+    }
     useEffect(() => {
+        axios   
+        .get(`https://disney-flix.herokuapp.com/auth/movie`, { headers: { 'Authorization': `${Token}`}}).then(
+        (elem) => {
+            console.log('AXIOS',elem)
+            if(elem.data.success) {
+                elem.data.data.forEach(element => {
+                    slides.films.forEach(el =>{
+                        if(el.title == element.gender) {
+                            el.data.push({
+                                title: element.title,
+                                description: element.description,
+                                gender: element.gender,
+                                id: element._id,
+                                big_image: GetDriveElemById(element.big_image_id),
+                                medium_image: GetDriveElemById(element.medium_image_id),
+                                small_image: GetDriveElemById(element.small_image_id),
+                                movie: GetDriveElemById(element.movie_id)
+                            })
+                        } 
+                    })
+                })
+                console.log(slides)
+            } else {
+                alert(elem.data.message ? elem.data.message : 'Aconteceu algum erro ')
+            }
+        })    
         setSlideRows(slides[category]);
-      }, [slides, category]);
+    }, [slides, category]);
 
     useEffect(() => {
         const fuse = new Fuse(slideRows, { keys: ['data.description', 'data.title', 'data.genre'] });
         const results = fuse.search(searchTerm).map(({ item }) => item);
-    
         if (slideRows.length > 0 && searchTerm.length > 3 && results.length > 0) {
-          setSlideRows(results);
+            setSlideRows(results);
         } else {
-          setSlideRows(slides[category]);
-        }
+            setSlideRows(slides[category]);
+        }        
     }, [searchTerm]);
 
     const handleLogout = () => {
@@ -45,7 +125,7 @@ export function BrowseContainer ({slides}) {
         history.push("/home")
     }
 
-    console.log(JSON.stringify(slideRows, null, 2), category)
+    // console.log(JSON.stringify(slideRows, null, 2), category)
     return profile.displayName ? (
         <>
             {loading ? <Loading src={profile.photoURL} /> : <Loading.ReleaseBody />}
@@ -53,9 +133,9 @@ export function BrowseContainer ({slides}) {
                 <Header.Frame>
                     <Header.Group>
                         <Header.Logo to={ROUTES.HOME} src={logo} alt="Netflix" />
-                        <Header.TextLink active={category === 'series' ? 'true' : 'false'} onClick={() => setCategory('series')} fontWeight="bold">
+                        {/* <Header.TextLink active={category === 'series' ? 'true' : 'false'} onClick={() => setCategory('series')} fontWeight="bold">
                             Series
-                        </Header.TextLink>
+                        </Header.TextLink> */}
                         <Header.TextLink active={category === 'films' ? 'true' : 'false'} onClick={() => setCategory('films')} fontWeight="bold">
                             Filmes
                         </Header.TextLink>
