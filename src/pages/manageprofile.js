@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form } from '../components';
+import { Form, ImageCropper } from '../components';
 import { HeaderContainer } from '../containers/header';
 import { FooterContainer } from '../containers/footer';
 import api from "../services/api";
@@ -19,12 +19,40 @@ const ManageUpload = (props) => {
     const [movieImageMedium, setMovieImageMedium] = useState('')
     const [movieImageSmall, setMovieImageSmall] = useState('')
     
-    const [upImg, setUpImg] = useState();
-    const imgRef = useRef(null);
-    const previewCanvasRef = useRef(null);
-    const [completedCrop, setCompletedCrop] = useState(null);
-    const [crop, setCrop] = useState({ unit: 'px', width: 200, height: 67, keepSelection:true, locked:true });
-    
+    const [blob, setBlob] = useState(null)
+    const [inputImg, setInputImg] = useState('')
+
+    const getBlob = (blob) => {
+        // pass blob up from the ImageCropper component
+        setBlob(blob)
+    }
+
+    const onInputChange = (e) => {
+        // convert image file to base64 string
+        const file = e.target.files[0]
+        const reader = new FileReader()
+
+        reader.addEventListener('load', () => {
+            setInputImg(reader.result)
+        }, false)
+
+        if (file) {
+            reader.readAsDataURL(file)
+        }
+    }
+
+    const handleSubmitImage = (e) => {
+    // upload blob to firebase 'images' folder with filename 'image'
+        e.preventDefault()
+        // firebase
+        //     .storage()
+        //     .ref('images')
+        //     .child('image')
+        //     .put(blob, { contentType: blob.type })
+        //     .then(() => {
+        //         // redirect user 
+        //     })
+    }
 
     const [error, setError] = useState('');
     const hiddenFileInput = React.useRef(null);
@@ -52,15 +80,19 @@ const ManageUpload = (props) => {
         };
         console.log('uploadMovie', uploadMovie)
         let formData = new FormData();
+        console.log(formData)
 
         formData.append('title', movieName)
         formData.append('gender', movieGender);
         formData.append('file', movieFile);
         formData.append('studio', movieDescription);
-        formData.append('image_big', movieDescription);
-        formData.append('image_medium', movieDescription);
-        formData.append('image_small', movieDescription);
-
+        formData.append('image_big', movieImageBig);
+        formData.append('image_medium', movieImageMedium);
+        formData.append('image_small', movieImageSmall);
+        for (let [key, value] of formData) {
+            console.log(`${key}: ${value}`)
+            console.log(value)
+        }
         console.log(formData)
         var MaxMovieSize = 10485760 //10MB
         if (movieFile.size <= MaxMovieSize && movieFile.type === 'video/mp4'){
@@ -130,7 +162,6 @@ const ManageUpload = (props) => {
                             <Form.InputFile
                                 name="big"
                                 id='selectImage1'
-                                accept="image/*"
                                 onChange={({ target }) => setMovieImageBig(target.files[0])}                            
                             />
                         </Form.BlockColumn>
