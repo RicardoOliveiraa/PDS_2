@@ -38,7 +38,7 @@ const maturitys = [
         value: '12', label: '+12'
     },
     {
-        value: '16', label: '+16e'
+        value: '16', label: '+16'
     },
     {
         value: '18', label: '+18'
@@ -72,7 +72,7 @@ const maturitys = [
   }
 
 const ManageUpload = (props) => {
-    const history = useHistory()
+    const history = useHistory();
     const [movieName, setMovieName] = useState('');
     const [movieFile, setMovieFile] = useState('');
     const [movieMaturity, setMovieMaturity] = useState('');
@@ -121,7 +121,7 @@ const ManageUpload = (props) => {
     
     const Token = sessionStorage.getItem('token')
     
-    const isInvalid = movieName === '' || movieFile === '' || movieGenre === '' ;
+    const isInvalid = movieName === '' || movieFile === '' || movieGenre === '' || movieMaturity === '' || movieDescription === '' || movieImageBig === "" || movieImageSmall === "";
     const handleClick = () => {
         document.getElementById("selectMovie").click()
     };
@@ -130,7 +130,7 @@ const ManageUpload = (props) => {
     const handleManageUpload = (event) => {
         event.preventDefault();
         let formData = new FormData();
-        console.log(formData)
+        const hasNeededField = movieName && movieMaturity && movieGenre && movieFile && movieDescription && movieImageBig && movieImageSmall
 
         formData.append('title', movieName)
         formData.append('maturity', movieMaturity);
@@ -140,24 +140,34 @@ const ManageUpload = (props) => {
         formData.append('image_big', movieImageBig);
         formData.append('image_small', movieImageSmall);
 
+        setMovieName('')
+        setMovieMaturity('')
+        setMovieGenre('')
+        setMovieDescription('')
+        setMovieImageBig('')
+        setMovieImageSmall('')
+
         var MaxMovieSize = 104857600 //10MB
-        if (movieFile.size <= MaxMovieSize && movieFile.type === 'video/mp4'){
-            axios
-                .post(`https://disney-flix.herokuapp.com/auth/movie`, formData, { headers: { 'Authorization': `${Token}`}, "Content-type": "multipart/form-data",})
-                .then(
-                    (elem) => {
-                        console.log(elem)
-                        if(elem.data.success) {
-                            alert(elem.data.message)
-                            history.push("/manageprofile")
-                        } else {
-                            alert(elem.data.message ? elem.data.message : 'Aconteceu algum erro na hora de fazer o upload do filme!')
-                        }
-                    })
-        } else{
-            alert('O filme deve ter um tamanho menor ou igual a 10MB e o arquivo deve ser no formato MP4!')
-        }    
-        
+        if (hasNeededField) {
+            if (movieFile.size <= MaxMovieSize && movieFile.type === 'video/mp4'){
+                axios
+                    .post(`https://disney-flix.herokuapp.com/auth/movie`, formData, { headers: { 'Authorization': `${Token}`}, "Content-type": "multipart/form-data",})
+                    .then(
+                        (elem) => {
+                            console.log(elem)
+                            if(elem.data.success) {
+                                alert(elem.data.message)
+                                history.push("/home")
+                            } else {
+                                alert(elem.data.message ? elem.data.message : 'Aconteceu algum erro na hora de fazer o upload do filme!')
+                            }
+                        })
+            } else{
+                alert('O filme deve ter um tamanho menor ou igual a 10MB e o arquivo deve ser no formato MP4!')
+            }    
+        } else {
+            alert("Todos os campos são necessários!!")
+        }
     };
 
     return (
