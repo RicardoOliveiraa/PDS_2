@@ -33,6 +33,9 @@ export default function selectionFilter ({series, films}){
             {
                 title: 'Romance', data: films.filter((item)=> item.genre === 'romance'),
             },
+            {
+                title: 'Boas Vibes', data: films.filter((item)=> item.genre === 'good-vibes'),
+            },
         ]
     };
 }

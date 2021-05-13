@@ -10,7 +10,6 @@ const Browse = (props) => {
         { title: "Tiro Longo", slug: "long-shot", genre: "crime", id: "1", maturity: "16", description: "Ao ser preso por um assassinato que não cometeu, Juan Catalan tenta provar sua inocência usando as cenas cortadas de um programa de TV", movie: "/videos/bunny.mp4"},
         { title: "Family Guy", slug: "family-guy", genre: "comedies", id: "2", maturity: "18", description: "A história da série gira em torno dos Griffins, uma família disfuncional que consiste nos pais Peter e Lois; os filhos Meg, Chris e Stewie; e o seu animal de estimação, o cão antropomórfico Brian", movie: "/videos/bunny.mp4"},
         { title: "Patrulha Canina", slug: "paw-patrol", genre: "children", id: "3", maturity: "0", description: "A patrulha canina!", movie: "/videos/bunny.mp4" },
-        { title: "Forrest Gumnp", slug: "forrest-gump", genre: "feel-good", id: "4", maturity: "16", description: "Quarenta anos da história dos Estados Unidos, vistos pelos olhos de Forrest Gump (Tom Hanks), um rapaz com QI abaixo da média e boas intenções. Por obra do acaso, ele consegue participar de momentos cruciais, como a Guerra do Vietnã e Watergate, mas continua pensando no seu amor de infância, Jenny Curran.", movie: "/videos/bunny.mp4"},
     ]
 
     var films = [

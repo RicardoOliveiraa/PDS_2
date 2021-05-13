@@ -58,7 +58,7 @@ export function SelectProfileContainer({ user, setProfile }) {
                     <Profiles.Title>Quem está assistindo?</Profiles.Title>
 
                     {profiles}
-                    <Profiles.Manage
+                    {/* <Profiles.Manage
                         onClick={
                             () => {
                                 setShouldManageProfile(!shouldManageProfile)
@@ -81,7 +81,7 @@ export function SelectProfileContainer({ user, setProfile }) {
 									</Form.Submit>
                             </Form>
                         }
-                    </div>
+                    </div> */}
                 </Profiles>
             </Profiles.List>
         </>
