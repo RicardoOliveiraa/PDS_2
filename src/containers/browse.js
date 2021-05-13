@@ -74,7 +74,8 @@ export function BrowseContainer ({slides}) {
         Terror: 'thriller',
         Infantil: "children",
         Suspense: "suspense",
-        Romance: "romance"
+        Romance: "romance",
+        'Boas Vibes': "good-vibes"
     }
 
 

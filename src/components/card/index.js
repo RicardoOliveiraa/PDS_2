@@ -82,11 +82,12 @@ Card.Feature = function CardFeature({ children, category, ...restProps }) {
     comedies: "comédias",
     children: "infantil",
     crime: 'crime',
-    'feel-good': "boas vibes",
+    'good-vibes': "boas vibes",
     drama: "drama",
     suspense: "suspense",
     romance: "romance",
-    thriller: "terror"
+    thriller: "terror",
+
   }
 
   return showFeature ? (
