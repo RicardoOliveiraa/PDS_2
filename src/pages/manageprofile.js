@@ -26,6 +26,9 @@ const genders = [
     },
     {
         value: 'romance', label: 'Romance'
+    },
+    {
+        value: 'good-vibes', label: "Boas Vibes"
     }
     
   ]
@@ -140,31 +143,33 @@ const ManageUpload = (props) => {
         formData.append('image_big', movieImageBig);
         formData.append('image_small', movieImageSmall);
 
-        setMovieName('')
-        setMovieMaturity('')
-        setMovieGenre('')
-        setMovieDescription('')
-        setMovieImageBig('')
-        setMovieImageSmall('')
-
         var MaxMovieSize = 104857600 //10MB
         if (hasNeededField) {
-            if (movieFile.size <= MaxMovieSize && movieFile.type === 'video/mp4'){
-                axios
-                    .post(`https://disney-flix.herokuapp.com/auth/movie`, formData, { headers: { 'Authorization': `${Token}`}, "Content-type": "multipart/form-data",})
-                    .then(
-                        (elem) => {
-                            console.log(elem)
-                            if(elem.data.success) {
-                                alert(elem.data.message)
-                                history.push("/home")
-                            } else {
-                                alert(elem.data.message ? elem.data.message : 'Aconteceu algum erro na hora de fazer o upload do filme!')
-                            }
-                        })
-            } else{
-                alert('O filme deve ter um tamanho menor ou igual a 10MB e o arquivo deve ser no formato MP4!')
-            }    
+            if (movieFile.type === 'video/mp4') {
+                if (movieFile.size <= MaxMovieSize) {
+                    setMovieName('')
+                    setMovieMaturity('')
+                    setMovieGenre('')
+                    setMovieDescription('')
+                    setMovieImageBig('')
+                    setMovieImageSmall('')
+                    axios
+                        .post(`https://disney-flix.herokuapp.com/auth/movie`, formData, { headers: { 'Authorization': `${Token}`}, "Content-type": "multipart/form-data",})
+                        .then(
+                            (elem) => {
+                                if(elem.data.success) {
+                                    alert(elem.data.message)
+                                    history.push("/home")
+                                } else {
+                                    alert(elem.data.message ? elem.data.message : 'Aconteceu algum erro na hora de fazer o upload do filme!')
+                                }
+                            })
+                } else{
+                    alert('O filme deve ter um tamanho menor ou igual a 30MB')
+                }    
+            } else {
+                alert("O formato do arquivo deve ser MP4")
+            }
         } else {
             alert("Todos os campos são necessários!!")
         }
