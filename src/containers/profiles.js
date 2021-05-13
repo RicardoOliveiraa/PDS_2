@@ -22,7 +22,7 @@ export function SelectProfileContainer({ user, setProfile }) {
     }
 
     const profiles = user.profile_users.map((user) =>
-        <Profiles.List>
+        <Profiles.List key={user.name}>
             <Profiles.User
                 onClick={
                     () =>
