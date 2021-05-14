@@ -60,8 +60,9 @@ const maturitys = [
       paddingBottom: 10,
       borderRadius: 4,
       display: 'flex',
-      width: 800,
-      marginRight: 50
+      width: 220,
+      marginRight: 50,
+      
     }),
     placeholder: () => ({
       color: '#757575',
@@ -235,26 +236,22 @@ const ManageUpload = (props) => {
                             Faça o upload as imagens do Filme.
                         </Form.MyLabel>
                         
-                        <Form.BlockColumn>
-                            <Form.MyLabel for="big">
-                                Imagem Grande.
-                            </Form.MyLabel>
-                            <Form.InputFile
-                                name="big"
-                                id='selectImage1'
-                                onChange={({ target }) => setMovieImageBig(target.files[0])}                            
-                            />
-                        </Form.BlockColumn>
-                        <Form.BlockColumn>
-                            <Form.MyLabel for="small">
-                                Imagem Pequena.
-                            </Form.MyLabel> 
-                            <Form.InputFile
-                                name="small"
-                                id='selectImage3'
-                                onChange={({ target }) => setMovieImageSmall(target.files[0])}                            
-                            />
-                        </Form.BlockColumn>
+                        <Form.MyLabel for="big">
+                            Imagem Grande.
+                        </Form.MyLabel>
+                        <Form.InputFile
+                            name="big"
+                            id='selectImage1'
+                            onChange={({ target }) => setMovieImageBig(target.files[0])}                            
+                        />
+                        <Form.MyLabel for="small">
+                            Imagem Pequena.
+                        </Form.MyLabel> 
+                        <Form.InputFile
+                            name="small"
+                            id='selectImage3'
+                            onChange={({ target }) => setMovieImageSmall(target.files[0])}                            
+                        />
                         <Form.MyLabel>
                             Faça o upload do arquivo do Filme.
                         </Form.MyLabel>
