@@ -47,6 +47,9 @@ export const ContainerManage = styled.div`
   padding: 60px 68px 40px;
   margin-bottom: 100px;
   margin-top: 40px;
+  @media(max-width: 400px) {
+    padding: 60px 20px 40px;
+  }
 }
 `;
 export const Error = styled.div`
