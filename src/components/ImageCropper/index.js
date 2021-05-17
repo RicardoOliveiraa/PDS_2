@@ -14,7 +14,6 @@ const ImageCropper = ({ getBlob, inputImg }) => {
     which isn't ideal. A better implementation would be getting the blob 
     only when the user hits the submit button, but this works for now  */
     const onCropComplete = async (_, croppedAreaPixels) => {
-        console.log("AQui essa porra", croppedAreaPixels)
         const croppedImage = await getCroppedImg(
             inputImg,
             croppedAreaPixels
