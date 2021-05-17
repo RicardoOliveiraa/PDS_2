@@ -10,6 +10,7 @@ import { Header } from '../components';
 import logo from '../logo.svg';
 import Select from 'react-select';
 import { useTheme } from 'styled-components';
+import { Card } from '../components'
 
 const genders = [
     {
@@ -107,19 +108,6 @@ const ManageUpload = (props) => {
         }
     }
 
-    const handleSubmitImage = (e) => {
-    // upload blob to firebase 'images' folder with filename 'image'
-        e.preventDefault()
-        // firebase
-        //     .storage()
-        //     .ref('images')
-        //     .child('image')
-        //     .put(blob, { contentType: blob.type })
-        //     .then(() => {
-        //         // redirect user 
-        //     })
-    }
-
     const [error, setError] = useState('');
     const hiddenFileInput = React.useRef(null);
     
@@ -130,6 +118,10 @@ const ManageUpload = (props) => {
         document.getElementById("selectMovie").click()
     };
 
+    const handleImageCropSave = () => {
+        setInputImg('')
+        setMovieImageSmall(blob)
+    }
     
     const handleManageUpload = (event) => {
         event.preventDefault();
@@ -166,7 +158,7 @@ const ManageUpload = (props) => {
                                 }
                             })
                 } else{
-                    alert('O filme deve ter um tamanho menor ou igual a 30MB')
+                    alert('O filme deve ter um tamanho menor ou igual a 10MB')
                 }    
             } else {
                 alert("O formato do arquivo deve ser MP4")
@@ -250,8 +242,22 @@ const ManageUpload = (props) => {
                         <Form.InputFile
                             name="small"
                             id='selectImage3'
-                            onChange={({ target }) => setMovieImageSmall(target.files[0])}                            
+                            onChange={onInputChange}                            
                         />
+                        {
+                            inputImg && (
+                                <Card>
+                                    <ImageCropper
+                                        getBlob={getBlob}
+                                        inputImg={inputImg}
+                                    />
+                                    <Form.Button onClick={() => handleImageCropSave()}>
+                                        Confirmar
+                                    </Form.Button>
+                                </Card>
+                            )
+                            
+                        }
                         <Form.MyLabel>
                             Faça o upload do arquivo do Filme.
                         </Form.MyLabel>
@@ -261,7 +267,7 @@ const ManageUpload = (props) => {
                             onChange={({ target }) => setMovieFile(target.files[0])}                            
                         />
                         <Form.Block>
-                            <Form.Submit  disabled={isInvalid} type="submit" >
+                            <Form.Submit  disabled={isInvalid} type="submit">
                                 Enviar o novo filme
                             </Form.Submit>
                         </Form.Block>
