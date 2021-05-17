@@ -166,15 +166,17 @@ export const InputFile = styled.input`
   width: 400px;
 `;
 export const Button = styled.button`
-  background: #333;
+background: #e50914;
+
   border-radius: 4px;
   border: 0;
-  color: #757575;
+  color: white;
   height: 60px;
   line-height: 50px;
   padding: 5px 20px;
   margin-bottom: 20px;
   text-align:left;
+  position: absolute
 `;
 
 

@@ -84,6 +84,7 @@ export function BrowseContainer ({slides}) {
         .get(`https://disney-flix.herokuapp.com/auth/movie`, { headers: { 'Authorization': `${Token}`}})
             .then(
                 ({ data }) => {
+                    console.log("SAI DAQUI RAPAIZ, SAI SAI SAI!")
                     if(data.success) {
                         data.movies.forEach(movie => {
                             slides.films.forEach(category => {

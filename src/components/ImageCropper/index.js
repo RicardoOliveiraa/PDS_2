@@ -5,8 +5,10 @@ import Cropper from 'react-easy-crop'
 import { getCroppedImg } from './cropImage'
 
 const ImageCropper = ({ getBlob, inputImg }) => {
-    const [crop, setCrop] = useState({ x: 0, y: 0 })
+    const [crop, setCrop] = useState({ x: 305, y: 172 })
     const [zoom, setZoom] = useState(1)
+
+    const initialCroppedAreaPixels = { width: 305, height: 172, x: 305, y: 172}
 
     /* onCropComplete() will occur each time the user modifies the cropped area, 
     which isn't ideal. A better implementation would be getting the blob 
@@ -19,18 +21,23 @@ const ImageCropper = ({ getBlob, inputImg }) => {
         getBlob(croppedImage)
     }
 
+    const cropSize = { width: 305, height: 172 }
+
+
     return (
         /* need to have a parent with `position: relative` 
     to prevent cropper taking up whole page */
-        <div className='cropper'> 
+        <div className='cropper'>
             <Cropper
                 image={inputImg}
+                cropSize={cropSize}
                 crop={crop}
                 zoom={zoom}
-                aspect={1}
+                aspect={4/3}
                 onCropChange={setCrop}
                 onCropComplete={onCropComplete}
                 onZoomChange={setZoom}
+                initialCroppedAreaPixels={initialCroppedAreaPixels}
             />
         </div>
     )
